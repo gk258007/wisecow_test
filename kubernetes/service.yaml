@@ -9,3 +9,4 @@ spec:
     - protocol: TCP
       port: 4499
       targetPort: 4499
+  type: LoadBalancer
