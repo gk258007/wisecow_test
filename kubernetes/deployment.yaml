@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: wisecowtestplat
+  name: wisecowtest
   labels:
-    app: wisecowtestplat
+    app: wisecowtest
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: wisecowtestplat
+      app: wisecowtest
   template:
     metadata:
       labels:
-        app: wisecowtestplat
+        app: wisecowtest
     spec:
       containers:
-      - name: wisecowtestplat
-        image: spicycriminal43/wisecowtest
+      - name: wisecowtest
+        image: spicycriminal43/wisecowtest:latest
         imagePullPolicy: Always 
         ports:
         - containerPort: 4499
