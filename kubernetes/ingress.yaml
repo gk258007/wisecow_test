@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: wisecowtestplatform
+spec:
+  ingressClassName: wisecowtestplatform
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: wisecowtestplatform
+            port:
+              number: 4499

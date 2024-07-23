@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: wisecowtestplatform
+spec:
+  selector:
+    app: wisecowtestplatform
+  ports:
+    - protocol: TCP
+      port: 4499
+      targetPort: 4499
