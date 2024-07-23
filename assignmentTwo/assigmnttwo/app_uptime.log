@@ -1,0 +1,5 @@
+2024-07-23 20:39:55,108 - Application is DOWN. Error: HTTPConnectionPool(host='your-application-url.com', port=80): Max retries exceeded with url: / (Caused by NameResolutionError("<urllib3.connection.HTTPConnection object at 0x1038d4b30>: Failed to resolve 'your-application-url.com' ([Errno 8] nodename nor servname provided, or not known)"))
+2024-07-23 20:40:16,843 - Application is UP. Status Code: 200
+2024-07-23 20:40:23,720 - Application is DOWN. Error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2024-07-23 20:40:30,297 - Application is DOWN. Error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2024-07-23 20:40:36,236 - Application is DOWN. Error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
