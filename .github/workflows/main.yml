@@ -45,8 +45,7 @@ jobs:
     # - name: Verify Deployment
     #   run: |
     #     kubectl rollout status deployment/wisecowtestplat
-
-- name: Azure Kubernetes set context
+    - name: Azure Kubernetes set context
       uses: Azure/aks-set-context@v1
       with:
         # Azure credentials i.e. output of `az ad sp create-for-rbac --sdk-auth`
