@@ -44,5 +44,4 @@ jobs:
 
     - name: Verify Deployment
       run: |
-        kubectl rollout restart deployment/wisecowtestplat
         kubectl rollout status deployment/wisecowtestplat
