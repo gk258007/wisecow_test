@@ -28,20 +28,50 @@ jobs:
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/wisecowtest:${{ github.sha }}
 
-    - name: Set up Azure CLI
-      uses: azure/login@v1
+    # - name: Set up Azure CLI
+    #   uses: azure/login@v1
+    #   with:
+    #     creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    # - name: Azure AKS Set context
+    #   run: az aks get-credentials --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} --name ${{ secrets.AZURE_AKS_CLUSTER }}
+
+    # - name: Deploy to AKS with TLS
+    #   run: |
+    #     kubectl apply -f kubernetes/deployment.yaml
+    #     kubectl apply -f kubernetes/service.yaml
+    #     kubectl apply -f kubernetes/ingress.yaml
+
+    # - name: Verify Deployment
+    #   run: |
+    #     kubectl rollout status deployment/wisecowtestplat
+
+# Create K8s secrets to pull images
+    - name: Create secret in Kubernetes cluster
+      uses: Azure/k8s-create-secret@v1.1
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-    - name: Azure AKS Set context
-      run: az aks get-credentials --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} --name ${{ secrets.AZURE_AKS_CLUSTER }}
-
-    - name: Deploy to AKS with TLS
-      run: |
-        kubectl apply -f kubernetes/deployment.yaml
-        kubectl apply -f kubernetes/service.yaml
-        kubectl apply -f kubernetes/ingress.yaml
-
-    - name: Verify Deployment
-      run: |
-        kubectl rollout status deployment/wisecowtestplat
+        # Container registry url
+        container-registry-url: https://index.docker.io/v1/
+        # Container registry username
+        container-registry-username: '${{secrets.DOCKERHUB_USERNAME}}'
+        # Container registry password
+        container-registry-password:  '${{secrets.DOCKERHUB_TOKEN}}'
+        # Type of Kubernetes secret. For example, docker-registry or generic
+        secret-type: docker-registry
+        # Name of the secret. You can use this secret name in the Kubernetes YAML configuration file.
+        secret-name: docker-image-pull-secret
+        
+      # Deploy to k8s cluster
+    - name: Deploy to Kubernetes cluster
+      uses: Azure/k8s-deploy@v1
+      with:        
+        # Path to the manifest files which will be used for deployment.
+        manifests: |
+          kubernetes/deployment.yml
+          kubernetes/service.yml
+        # Fully qualified resource URL of the image(s) to be used for substitutions on the manifest files Example: contosodemo.azurecr.io/helloworld:test
+        images: '${{secrets.DOCKERHUB_USERNAME}}/wisecowtest:${{ github.sha }}'
+        # Name of a docker-registry secret that has already been set up within the cluster. Each of these secret names are added under imagePullSecrets field for the workloads found in the input manifest files
+        imagepullsecrets: docker-image-pull-secret
+        # deploy/promote/reject
+        action: deploy
