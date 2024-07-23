@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: wisecowtestplat
-        image: spicycriminal43/testing-wisecow
+        image: spicycriminal43/wisecowtest
         imagePullPolicy: Always 
         ports:
         - containerPort: 4499
