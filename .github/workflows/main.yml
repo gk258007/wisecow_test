@@ -45,7 +45,15 @@ jobs:
     # - name: Verify Deployment
     #   run: |
     #     kubectl rollout status deployment/wisecowtestplat
-
+- name: Azure Kubernetes set context
+      uses: Azure/aks-set-context@v1
+      with:
+        # Azure credentials i.e. output of `az ad sp create-for-rbac --sdk-auth`
+        creds: '${{secrets.AZURE_CREDENTIALS}}'
+        # Resource Group Name
+        resource-group: aks-demo-rg
+        # AKS Cluster Name
+        cluster-name: ga-aks-demo-cluster
 # Create K8s secrets to pull images
     - name: Create secret in Kubernetes cluster
       uses: Azure/k8s-create-secret@v1.1
